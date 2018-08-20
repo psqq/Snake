@@ -1,0 +1,7 @@
+{
+  "name": "Snake",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "psqq <pestov-sa@ya.ru>",
+  "license": "MIT"
+}
