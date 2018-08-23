@@ -1,5 +1,5 @@
 {
-  "name": "Snake",
+  "name": "snake",
   "version": "1.0.0",
   "main": "index.js",
   "author": "psqq <pestov-sa@ya.ru>",
@@ -13,5 +13,11 @@
     "typescript": "^3.0.1",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.3.6",
+    "@types/mainloop.js": "^1.0.5",
+    "jquery": "^3.3.1",
+    "mainloop.js": "^1.0.4"
   }
 }
