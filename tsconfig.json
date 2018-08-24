@@ -3,9 +3,18 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
-    "module": "es6",
-    "target": "es5",
-    "jsx": "react",
-    "allowJs": true
-  }
+    "module": "commonjs",
+    "removeComments": true,
+    "target": "ES2017",
+  },
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules/*",
+    "dist/*",
+    "**/*.spec.ts"
+  ]
 }

@@ -1,5 +1,8 @@
 import * as $ from 'jquery';
 import * as Mainloop from 'mainloop.js';
+import Snake from './snake';
+import Victor = require('victor');
+import { Direction } from './direction';
 
 class GameCanvas {
     readonly WIDTH_IN_CELLS = 20;
@@ -26,6 +29,7 @@ class GameCanvas {
 }
 
 let gameCanvas = new GameCanvas();
+let snake = new Snake(new Victor(10, 10), 3, Direction.DOWN);
 
 function update(delta: number) {
 }
