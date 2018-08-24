@@ -22,9 +22,13 @@ export default class GameCanvas {
         });
     }
 
-    getCanvasContext(): CanvasRenderingContext2D {
+    private getCanvasContext(): CanvasRenderingContext2D {
         return this.context;
     }
+
+    getWidthInCells() { return this.WIDTH_IN_CELLS; }
+
+    getHeightInCells() { return this.HEIGHT_IN_CELLS; }
 
     fillCell(position: Victor) {
         this.context.fillStyle = 'black';

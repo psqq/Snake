@@ -1,41 +1,24 @@
-import * as $ from 'jquery';
+
 import * as Mainloop from 'mainloop.js';
-import Snake from './snake';
-import Timer from './timer';
-import Victor = require('victor');
-import { Direction } from './direction';
-import GameCanvas from './game-canvas';
+import GameScreen from './screens/game-screen';
+import { Screen, Screens } from './screens/screen';
 
-let gameCanvas = new GameCanvas();
+let screens: Screen[] = [];
 
-let snake = new Snake(new Victor(10, 10), 3, Direction.DOWN);
-let snakeUpdater = new Timer(
-    1000,
-    () => {
-        debugger;
-        snake.makeStep();
-    },
-    true
-);
+let gameScreen = new GameScreen();
+screens[Screens.GAME_SCREEN] = gameScreen;
 
-snakeUpdater.start();
-
-let updateDelta: number;
+let currentScreen = Screens.GAME_SCREEN;
 
 function update(delta: number) {
-    updateDelta = delta;
-    snakeUpdater.update(delta);
+    screens[currentScreen].update(delta);
 }
 
 function draw() {
-    gameCanvas.clear();
-    for(let bodyPart of snake.body.values()) {
-        gameCanvas.fillCell(bodyPart);
-    }
+    screens[currentScreen].draw();
 }
 
-function end(fps: number, panic: boolean) {
-    $(".fps").text(`FPS: ${fps}; updateDelta: ${updateDelta}`);
-}
+gameScreen.init();
+gameScreen.start();
 
-Mainloop.setUpdate(update).setDraw(draw).setEnd(end).start();
+Mainloop.setUpdate(update).setDraw(draw).start();
