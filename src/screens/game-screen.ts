@@ -13,6 +13,7 @@ export default class GameScreen extends Screen {
     gameCanvas: GameCanvas;
     snake: Snake;
     snakeTimer: Timer;
+    apple: Victor = new Victor(0, 0);
 
     constructor() {
         super();
@@ -20,8 +21,13 @@ export default class GameScreen extends Screen {
         this.snakeTimer = new Timer(300, this.onSnakeTimerTick.bind(this), true);
     }
 
+    setRandomPositionForApple() {
+        this.apple = this.gameCanvas.getRandomPosition();
+    }
+
     init() {
         this.snake = new Snake(new Victor(10, 10), 3, Direction.DOWN);
+        this.setRandomPositionForApple();
         this.snakeTimer.stop();
         this.bindEvents();
     }
@@ -67,6 +73,7 @@ export default class GameScreen extends Screen {
 
     draw() {
         this.gameCanvas.clear();
+        this.gameCanvas.fillCell(this.apple, 'red');
         for (let bodyPart of this.snake.body.values()) {
             this.gameCanvas.fillCell(bodyPart);
         }

@@ -26,6 +26,23 @@ export default class Snake {
         return this._body;
     }
 
+    getHead(): Victor {
+        return this._body[0].clone();
+    }
+
+    getLength(): number {
+        return this._body.length;
+    }
+    
+    isInSnake(position: Victor) : boolean {
+        for(let bodyPart of this._body) {
+            if (position.isEqualTo(bodyPart)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     setDirectionToMove(directionToMove: Direction): boolean {
         if (this._body.length > 1) {
             let nextPositionAfterMoving = this._body[0].clone().add(toVictor(directionToMove));

@@ -1,5 +1,6 @@
 import * as $ from 'jquery';
 import Victor = require('victor');
+import Random = require('random-js');
 
 export default class GameCanvas {
     private readonly WIDTH_IN_CELLS = 20;
@@ -26,12 +27,20 @@ export default class GameCanvas {
         return this.context;
     }
 
+    getRandomPosition() {
+        let random = new Random();
+        return new Victor(
+            random.integer(0, this.WIDTH_IN_CELLS - 1),
+            random.integer(0, this.HEIGHT_IN_CELLS - 1),
+        );
+    }
+
     getWidthInCells() { return this.WIDTH_IN_CELLS; }
 
     getHeightInCells() { return this.HEIGHT_IN_CELLS; }
 
-    fillCell(position: Victor) {
-        this.context.fillStyle = 'black';
+    fillCell(position: Victor, color = "black") {
+        this.context.fillStyle = color;
         this.context.fillRect(
             position.x * this.CELL_SIZE, position.y * this.CELL_SIZE, 
             this.CELL_SIZE, this.CELL_SIZE
