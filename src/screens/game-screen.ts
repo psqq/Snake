@@ -45,12 +45,10 @@ export default class GameScreen extends Screen {
 
     onSnakeTimerTick() {
         let nextHeadPosition = this.snake.getNextHeadPosition();
-        if (nextHeadPosition.x < 0 || nextHeadPosition.y < 0
-            || nextHeadPosition.x >= this.gameCanvas.getHeightInCells()
-            || nextHeadPosition.y >= this.gameCanvas.getHeightInCells()) {
-            this.snakeTimer.stop();
-        } else {
+        if (this.gameCanvas.isInField(nextHeadPosition)) {
             this.snake.makeStep();
+        } else {
+            this.snakeTimer.stop();
         }
     }
 
@@ -71,11 +69,19 @@ export default class GameScreen extends Screen {
         this.snakeTimer.update(delta);
     }
 
-    draw() {
-        this.gameCanvas.clear();
-        this.gameCanvas.fillCell(this.apple, 'red');
+    drawSnake() {
         for (let bodyPart of this.snake.body.values()) {
             this.gameCanvas.fillCell(bodyPart);
         }
+    }
+
+    drawApple() {
+        this.gameCanvas.fillCell(this.apple, 'red');
+    }
+
+    draw() {
+        this.gameCanvas.clear();
+        this.drawApple();
+        this.drawSnake();
     }
 }

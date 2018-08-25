@@ -27,6 +27,13 @@ export default class GameCanvas {
         return this.context;
     }
 
+    isInField(position: Victor): boolean {
+        return position.x >= 0
+            && position.y >= 0
+            && position.x < this.getWidthInCells()
+            && position.y < this.getHeightInCells();
+    }
+
     getRandomPosition() {
         let random = new Random();
         return new Victor(
@@ -42,7 +49,7 @@ export default class GameCanvas {
     fillCell(position: Victor, color = "black") {
         this.context.fillStyle = color;
         this.context.fillRect(
-            position.x * this.CELL_SIZE, position.y * this.CELL_SIZE, 
+            position.x * this.CELL_SIZE, position.y * this.CELL_SIZE,
             this.CELL_SIZE, this.CELL_SIZE
         );
     }
@@ -50,7 +57,7 @@ export default class GameCanvas {
     clear() {
         this.context.fillStyle = 'white';
         this.context.fillRect(
-            0, 0, 
+            0, 0,
             parseInt(this.canvas.attr('width')), parseInt(this.canvas.attr('height'))
         );
     }
