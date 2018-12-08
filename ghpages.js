@@ -61,6 +61,9 @@ async function main() {
     for (var fn of options.filesToMoveOnGhPages) {
         run(`cp -R ${fn} ${tmpDir.name}`);
     }
+    for(var cmd of options.runBeforeCheckoutOnGhPages) {
+        run(cmd);
+    }
     var status = await git.status();
     var currentBranch = status.current;
     debugMessage('Current branch:', currentBranch);
@@ -69,9 +72,6 @@ async function main() {
         printStatusFiles(status.files, true);
         console.error("Error: You have modified files in current branch!");
         return;
-    }
-    for(var cmd of options.runBeforeCheckoutOnGhPages) {
-        run(cmd);
     }
     run('git checkout gh-pages');
     if (options.onGhPages.removeFiles) {
