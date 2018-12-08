@@ -1,24 +1,29 @@
 
-import * as Mainloop from 'mainloop.js';
-import GameScreen from './screens/game-screen';
-import { Screen, Screens } from './screens/screen';
+var can = document.createElement('canvas');
+var ctx = can.getContext('2d');
 
-let screens: Screen[] = [];
+can.style.position = 'fixed';
+can.style.left = '0px';
+can.style.top = '0px';
 
-let gameScreen = new GameScreen();
-screens[Screens.GAME_SCREEN] = gameScreen;
+document.querySelector('body').appendChild(can);
 
-let currentScreen = Screens.GAME_SCREEN;
-
-function update(delta: number) {
-    screens[currentScreen].update(delta);
+function setFullscreenSize() {
+    can.width = window.innerWidth;
+    can.height = window.innerHeight;
 }
 
-function draw() {
-    screens[currentScreen].draw();
+setFullscreenSize();
+window.addEventListener('resize', setFullscreenSize);
+
+function goAnim() {
+    var [w, h] = [can.width, can.height];
+    ctx.clearRect(0, 0, w, h);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(w, h);
+    ctx.stroke();
+    requestAnimationFrame(goAnim);
 }
 
-gameScreen.init();
-gameScreen.start();
-
-Mainloop.setUpdate(update).setDraw(draw).start();
+requestAnimationFrame(goAnim);

@@ -1,34 +1,37 @@
 const path = require('path');
 const webpack = require('webpack');
+const fs = require("fs");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = {
-  entry: './src/index.ts',
-  devtool: 'inline-source-map',
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js']
-  },
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  },
-  watchOptions: {
-    aggregateTimeout: 300,
-    poll: 1000,
-    ignored: /node_modules/,
-  },
-  plugins: [
-    new webpack.WatchIgnorePlugin([
-      /\.js$/,
-      /\.d\.ts$/
-    ])
-  ],
+module.exports = (env, options) => {
+
+    const config = {
+        entry: './src/index.ts',
+        output: {
+            path: path.resolve(__dirname, 'dist'),
+            filename: "[name].[chunkhash].js",
+        },
+        plugins: [
+            new HtmlWebpackPlugin()
+        ],
+        resolve: {
+            extensions: [".ts", ".tsx", ".js"]
+        },
+        module: {
+            rules: [
+                { test: /\.tsx?$/, loader: "ts-loader" }
+            ]
+        }
+    };
+
+    if (options.mode === 'development') {
+        config.devtool = 'source-map';
+        config.watchOptions = {
+            aggregateTimeout: 300,
+            poll: 1000,
+            ignored: [/node_modules/, /\.git/],
+        };
+    }
+
+    return config;
 };
