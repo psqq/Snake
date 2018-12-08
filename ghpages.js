@@ -6,6 +6,9 @@ var options = {
     filesToMoveOnGhPages: [
         'dist/*'
     ],
+    runBeforeCheckoutOnGhPages: [
+        'yarn run setDebugStatus'
+    ],
     onGhPages: {
         removeFiles: true,
         filesToRemove: {
@@ -66,6 +69,9 @@ async function main() {
         printStatusFiles(status.files, true);
         console.error("Error: You have modified files in current branch!");
         return;
+    }
+    for(var cmd of options.runBeforeCheckoutOnGhPages) {
+        run(cmd);
     }
     run('git checkout gh-pages');
     if (options.onGhPages.removeFiles) {
