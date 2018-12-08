@@ -1,6 +1,7 @@
+import * as PIXI from 'pixi.js'
 
-var can = document.createElement('canvas');
-var ctx = can.getContext('2d');
+var app = new PIXI.Application({ backgroundColor: 0xffffff });
+var can = app.renderer.view;
 
 can.style.position = 'fixed';
 can.style.left = '0px';
@@ -11,19 +12,18 @@ document.querySelector('body').appendChild(can);
 function setFullscreenSize() {
     can.width = window.innerWidth;
     can.height = window.innerHeight;
+    app.renderer.resize(can.width, can.height);
 }
 
 setFullscreenSize();
 window.addEventListener('resize', setFullscreenSize);
 
-function goAnim() {
-    var [w, h] = [can.width, can.height];
-    ctx.clearRect(0, 0, w, h);
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(w, h);
-    ctx.stroke();
-    requestAnimationFrame(goAnim);
-}
+var line = new PIXI.Graphics(true);
+app.stage.addChild(line);
 
-requestAnimationFrame(goAnim);
+app.ticker.add(() => {
+    line.clear();
+    line.lineStyle(1, 0, 1);
+    line.moveTo(0, 0);
+    line.lineTo(can.width, can.height);
+});
